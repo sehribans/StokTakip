@@ -1,0 +1,43 @@
+﻿@model TblUrun
+@{
+    List<TblKategori> kategoriler = ViewBag.katagori;
+}
+<div class="col-md-6">
+    <div class="card mb-4">
+        <h5 class="card-header">Ürün Formu</h5>
+        <div class="card-body">
+            <form asp-action="UrunForm" method="post">
+                <div class="mb-3">
+
+                    <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" asp-for="Kategoriid">
+                        @foreach(var item in kategoriler)
+                        {
+                            <option value="@item.Id">@item.Kategori</option>
+                        }
+                        
+                    </select>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="col-lg-6 me-2">
+                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Ürün Adı" aria-describedby="defaultFormControlHelp" asp-for="Urunadi" />
+                    </div>
+                    <div class="col-lg-6">
+                     <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Stok Kodu" aria-describedby="defaultFormControlHelp" asp-for="StokKodu"/>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex">
+
+                    <div class="col-lg-6 me-2">
+                    <input class="form-control" type="number" id="html5-number-input" asp-for="Fiyat"/>
+                    </div>
+                    <div class="input-group w-auto">
+                        <span class="input-group-text">$</span>
+                        <input type="text" class="form-control" placeholder="Fiyat" aria-label="Amount (to the nearest dollar)" />
+                        <span class="input-group-text">.00</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn text-white mb-2 col-lg-2 btn-primary">Ekle</button>
+            </form>
+        </div>
+    </div>
+</div>
