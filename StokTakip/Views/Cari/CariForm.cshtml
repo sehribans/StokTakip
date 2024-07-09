@@ -1,0 +1,29 @@
+﻿@model TblCari
+<div class="col-md-6">
+    <div class="card mb-4">
+        <h5 class="card-header">Cari Formu</h5>
+        <div class="card-body">
+            <form asp-action="CariForm" method="post">
+                <input type="hidden"  asp-for="Bakiye" /> 
+                <input type="hidden"  asp-for="OlusturmaTarihi" /> 
+                <div class="mb-3 d-flex">
+                    <div class="col-lg-6 me-2">
+                        <input type="text" class="form-control" placeholder="Unvan" asp-for="Unvan" />
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="tel" class="form-control" placeholder="Telefon"  asp-for="Telefon" />
+                    </div>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="col-lg-6 me-2">
+                        <input class="form-control" type="email" placeholder="E-Mail" asp-for="Eposta" />
+                    </div>
+                    <div class="col-lg-6">
+                        <textarea class="form-control" placeholder="Adres" asp-for="Adres"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn text-white mb-2 col-lg-2 btn-primary">Ekle</button>
+            </form>
+        </div>
+    </div>
+</div>

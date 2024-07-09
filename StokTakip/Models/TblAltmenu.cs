@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 namespace StokTakip.Models
 {
-    public partial class TblMenu
+    public partial class TblAltmenu
     {
         public int Id { get; set; }
-        public string? Menuad { get; set; }
+        public string? Altmenuad { get; set; }
+        public int? Menuid { get; set; }
     }
 }

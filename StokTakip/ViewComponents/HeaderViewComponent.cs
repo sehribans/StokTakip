@@ -15,8 +15,13 @@ namespace StokTakip.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-           
-            return View(_context.TblMenus.ToList());
+            var menu = _context.TblMenus.ToList();
+            var alt= _context.TblAltmenus.ToList();
+
+            var menuler = (menu, alt);
+
+
+            return View(menuler);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model List<TblMenu>
+﻿@model (List<TblMenu> menu, List<TblAltmenu> altmenu);
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="index.html" class="app-brand-link">
@@ -57,29 +57,34 @@
 
     <ul class="menu-inner py-1">
 
-     @*    @foreach (var item in Model)
+        @foreach (var item in Model.menu)
         {
             <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-box"></i>
-                    <div data-i18n="@item.Controller">@item.Controller</div>
+                    <div data-i18n="@item.Menuad">@item.Menuad</div>
                 </a>
-
                 <ul class="menu-sub">
-                    <li class="menu-item">
-                        <a href="/Urun/Index" class="menu-link">
-                            <div data-i18n="Ürün Listesi">Ürün Listesi</div>
-                        </a>
-                    </li>
+                @foreach(var item2 in Model.altmenu)
+                {
+                    var Altmenu = Model.altmenu.FirstOrDefault(s => s.Menuid == item.Id) ?? new();
+                <li class="menu-item">
+                    <a href="/Urun/Index" class="menu-link">
+                        <div data-i18n="Ürün Listesi">Ürün Listesi</div>
+                    </a>
+                </li>
+                }
+               
+                   
                 </ul>
             </li>
 
-        } *@
+        }
         <!-- Layouts -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="Ürünler">Ürünler</div>
+                <i class="fa-solid fa-box fa-lg me-2" style="color: #8789ff;"></i>
+                <div data-i18n="Ürünler Yönetimi">Ürünler Yönetimi</div>
             </a>
 
             <ul class="menu-sub">
@@ -103,14 +108,49 @@
                         <div data-i18n="Kategori Formu">Kategori Formu</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="layouts-blank.html" class="menu-link">
-                        <div data-i18n="Blank">Blank</div>
-                    </a>
-                </li>
+           
             </ul>
         </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-users fa-lg me-2" style="color: #8789ff;"></i>
+                <div data-i18n="Cari Yönetimi">Cari Yönetimi</div>
+            </a>
 
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="/Cari/Index" class="menu-link">
+                        <div data-i18n="Cari Listesi">Cari Listesi</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/Cari/CariForm" class="menu-link">
+                        <div data-i18n="Cari Formu">Cari Formu</div>
+                    </a>
+                </li>
+               
+            </ul>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-sharp fa-solid fa-cart-shopping fa-lg me-2" style="color: #8789ff;"></i>
+                <div data-i18n="Satış Yönetimi">Satış Yönetimi</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="/Satis/Index" class="menu-link">
+                        <div data-i18n="Satış Listesi">Satış Listesi</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/Satis/SatisForm" class="menu-link">
+                        <div data-i18n="Satış Formu">Satış Formu</div>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
     </ul>
 </aside>
 <div class="layout-page">
