@@ -67,8 +67,8 @@ namespace StokTakip.Controllers
         }
         public IActionResult Kategori()
         {
-
-            return View(_context.TblKategoris.ToList());
+            ViewBag.Kategori = _context.TblKategoris.ToList();
+            return View();
         }
         public IActionResult KategoriForm()
         {
@@ -101,13 +101,6 @@ namespace StokTakip.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        //    public IActionResult Filtrele(int Id)
-        //    {
-
-
-        //        return RedirectToAction("Index");
-        //    }
 
     }
 

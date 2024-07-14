@@ -1,0 +1,46 @@
+﻿@using StokTakip.Models.Vm
+@model SatisVm
+
+<div class="card">
+    <div class="d-flex justify-content-between">
+        <h5 class="card-header">kffmongrghhh</h5>
+
+    </div>
+
+
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+
+                 
+                    <th>ÜRÜN ADI</th>
+                    <th>ADET</th>
+                    <th>BİRİM FİYAT</th>
+                    <th>TOPLAM FİYAT</th>
+                    <th>#</th>
+
+
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+              
+                @foreach(var item in Model.SepetListe)
+                {
+                    var urunad = Model.UrunListe.FirstOrDefault(m => m.Id == item.UrunId) ?? new();
+                    <tr>
+                        <td>@urunad.Urunadi</td>
+                        <td>@item.Adet</td>
+                        <td>@string.Format("{0:C2}",item.SatisTutar)</td>
+                        <td>@string.Format("{0:C2}",item.Adet*item.SatisTutar)</td>
+                    </tr>
+                }
+
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+

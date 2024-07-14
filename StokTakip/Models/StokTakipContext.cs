@@ -131,10 +131,6 @@ namespace StokTakip.Models
 
                 entity.Property(e => e.Adet).HasColumnName("ADET");
 
-                entity.Property(e => e.Maliyet)
-                    .HasColumnType("decimal(18, 2)")
-                    .HasColumnName("MALIYET");
-
                 entity.Property(e => e.SatisTutar)
                     .HasColumnType("decimal(18, 2)")
                     .HasColumnName("SATIS_TUTAR");
@@ -142,7 +138,7 @@ namespace StokTakip.Models
                    .HasColumnType("decimal(18, 2)")
                    .HasColumnName("TOPLAM_TUTAR");
                 entity.Property(e => e.SiparisId).HasColumnName("SIPARIS_ID");
-
+                entity.Property(e => e.CariId).HasColumnName("CARI_ID");
                 entity.Property(e => e.UrunId).HasColumnName("URUN_ID");
             });
 

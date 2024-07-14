@@ -3,6 +3,7 @@
     public class SatisVm
     {
       public List<TblCari>? CariListe { get; set; } 
+      public TblCari? Cari { get; set; } 
       public List<TblOdemetipi>? OdemetipiListe { get;set; }
 
      public List<TblUrun>? UrunListe { get; set; }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.Evaluation;
+
 using StokTakip.Models;
 
 namespace StokTakip.ViewComponents

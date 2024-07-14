@@ -4,11 +4,12 @@
 @{
     List<TblCari> cari = ViewBag.Cari;
     List<TblSipari> siparis = ViewBag.siparis;
+    List<TblOdemetipi> odeme = ViewBag.Odeme;
 }
 <div class="card">
     <div class="d-flex justify-content-between">
         <h5 class="card-header">Ürünler</h5>
-  
+
     </div>
 
 
@@ -19,12 +20,10 @@
 
                     <th>Tarih</th>
                     <th>Müşteri Adı</th>
-                    <th>Maliyet</th>
                     <th>Satış</th>
                     <th>Ödeme Türü</th>
                     <th>Alınan Tutar</th>
                     <th>Kasa Yazarı</th>
-                    <th>K/Z</th>
                     <th>#</th>
 
 
@@ -35,14 +34,15 @@
                 @foreach (var item in Model)
                 {
                     var siparisler = siparis.FirstOrDefault(m => m.Id == item.SiparisId) ?? new();
-                    var unvan = cari.FirstOrDefault(s => s.Id == siparisler.CariId) ??new();
+                    var unvan = cari.FirstOrDefault(s => s.Id == siparisler.CariId) ?? new();
+                    var tip = odeme.FirstOrDefault(s => s.Id==siparisler.CariId) ?? new();
                     <tr>
-                        <td>@siparisler.KayitTarihi</td>
+                        <td>@string.Format("{0:D}", @siparisler.KayitTarihi)</td>
                         <td>@unvan.Unvan</td>
-                        <td>@item.Maliyet</td>
-                        <td>@item.SatisTutar</td>
-                        <td>@siparisler.OdemeSeklİ</td>
-                        <td>@siparisler.AlinanTutar</td>
+                        <td>@string.Format("{0:C2}",@item.SatisTutar)</td>
+                        <td>@tip.OdemeAdi</td>
+                        <td>@string.Format("{0:C2}",@siparisler.AlinanTutar)</td>
+                        <td>@(item.SatisTutar-(item.SatisTutar * tip.Komisyon / 100))</td>
                         
                         <td>
                             <div class="dropdown">
@@ -50,8 +50,8 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/Urun/UrunForm/@item.Id"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                    <a class="dropdown-item" href="/Urun/USil/@item.Id"><i class="bx bx-trash me-1"></i> Delete</a>
+                                    <a class="dropdown-item" href="/Satis/Detay/@siparisler.Id"><i class='bx bx-info-circle me-1'></i>Detayları Görüntüle</a>
+                                    <a class="dropdown-item" href="/Satis/Sil/@siparisler.Id"><i class="bx bx-trash me-1"></i> Sil</a>
                                 </div>
                             </div>
                         </td>

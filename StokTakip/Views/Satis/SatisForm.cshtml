@@ -1,46 +1,57 @@
 ﻿@using StokTakip.Models.Vm
 @model SatisVm
+@{
+    List<TblSepet> sepet = ViewBag.sepet;
+}
 <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <div class="row border-bottom">
                     <div class="col-lg-12">
-                        <form method="post" action="/Satis/SatisForm">
+                        <form method="post" asp-action="SatisPost">
                             <div class="row">
 
                                 <div class="col-lg-3 col-sm-12 col-md-12">
                                     <div class="input-group mb-3">
-                                        <label for="urunID" style="min-width:unset!important;" class="input-group-text">Cari</label>
-                                        <select required="" style="width:76%;" data-val="true" data-val-required="The musteriId field is required." id="Siparis_musteriId" asp-for="Siparis.CariId"  data-select2-id="Siparis_musteriId" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
-                                            <option selected="" disabled="" data-select2-id="2"> Cari Seçiniz </option>
-                                            @foreach(var item in Model.CariListe ?? new())
+                                        <label for="CariId" style="min-width:unset!important;" class="input-group-text">Cari</label>
+                                        <select onchange="CariyiYonlendir(this)" required="" style="width:76%;" data-val="true" data-val-required="The musteriId field is required." id="CariId" asp-for="Siparis.CariId" data-select2-id="Siparis_musteriId" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+                                            <option disabled="" data-select2-id="2"> Cari Seçiniz </option>
+                                            @foreach (var item in Model.CariListe ?? new())
                                             {
-                                                <option value="@item.Id">@item.Unvan</option>
+                                                if (item.Id == ViewBag.Id)
+                                                {
+                                                    <option selected="@(ViewBag.Id==item.Id ? "true" : "false" )" value="@item.Id"><a href="/Satis/SatisForm/@item.Id">@item.Unvan</a></option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id"><a href="/Satis/SatisForm/@item.Id">@item.Unvan</a></option>
+                                                }
+
                                             }
-                                            
-                                                <option value="150">yasin tunç</option>
-                                                <option value="151">serhat demiröz</option>
-                                        </select><span class="select2 select2-container select2-container--bootstrap4" dir="ltr" data-select2-id="1" style="width: 76%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-Siparis_musteriId-container"><span class="select2-selection__rendered" id="select2-Siparis_musteriId-container" role="textbox" aria-readonly="true" title=" Cari Seçiniz "> Cari Seçiniz </span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+
+                                            <option value="150">Salak Samet</option>
+
+                                        </select>
                                         <span class="field-validation-valid" data-valmsg-for="Siparis.CarıId" data-valmsg-replace="true"></span>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-sm-12 col-md-12">
                                     <div class="input-group mb-3">
-                                        <label for="Aciklama" style="min-width:unset!important;" class="input-group-text">Ödeme</label>
+                                        <label for="Siparis_OdemeSeklİ" style="min-width:unset!important;" class="input-group-text">Ödeme</label>
                                         <select required="" style="width:70%;" data-val="true" data-val-required="The odemeTurId field is required." id="Siparis_OdemeSeklİ" asp-for="Siparis.OdemeSeklİ" data-select2-id="Siparis_OdemeSeklİ" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
-                                            @foreach(var item in Model.OdemetipiListe ?? new())
+                                            @foreach (var item in Model.OdemetipiListe ?? new())
                                             {
                                                 <option value="@item.Id" data-select2-id="4">@item.OdemeAdi</option>
                                             }
-                                           
-                                                
-                                        </select><span class="select2 select2-container select2-container--bootstrap4" dir="ltr" data-select2-id="3" style="width: 70%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-Siparis_odemeTurId-container"><span class="select2-selection__rendered" id="select2-Siparis_odemeTurId-container" role="textbox" aria-readonly="true" title="NAKİT">NAKİT</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+
+
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-sm-12 col-md-12">
                                     <div class="input-group mb-3">
-                                        <label for="Aciklama" style="min-width:unset!important;" class="input-group-text">Alınan</label>
+                                        <label for="Siparis_hesapAkis_Al_nan" style="min-width:unset!important;" class="input-group-text">Alınan</label>
                                         <input required="" type="text" class="form-control decimal" data-val="true" data-val-number="The field Alınan must be a number." data-val-required="The Alınan field is required." id="Siparis_hesapAkis_Al_nan" asp-for="Siparis.AlinanTutar" value="" style="text-align: right;" inputmode="decimal">
                                     </div>
                                 </div>
@@ -58,7 +69,8 @@
                                     <h4 class="mt-3">Toplam Tutar : <span style="color:green;">0₺</span></h4>
                                 </div>
                             </div>
-                        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8Cbel7F_8F9EmmwgGAcIw2485fR7DF9DBPQ1ovqBXWyNGBPyp3JIns_Go9Ch7UvLNGCYCK17ozeZYqgIX1hedibGiVcpzlkUjKKP_cqElvNz0SngwCxf7yahnQl80OImpN8t5HGKxf_WmkEpWSOtOnSwVU3XvmYW9bSvJMsik-6j_PX4Y3UlwWNxpeFtYwcLzw"></form>
+                            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8Cbel7F_8F9EmmwgGAcIw2485fR7DF9DBPQ1ovqBXWyNGBPyp3JIns_Go9Ch7UvLNGCYCK17ozeZYqgIX1hedibGiVcpzlkUjKKP_cqElvNz0SngwCxf7yahnQl80OImpN8t5HGKxf_WmkEpWSOtOnSwVU3XvmYW9bSvJMsik-6j_PX4Y3UlwWNxpeFtYwcLzw">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -69,7 +81,8 @@
                     <div class="col-12 col-md-6 col-xxl-5">
                         <form method="post" enctype="multipart/form-data" action="/Satis/AddOrUpdate">
                             <input type="hidden" data-val="true" data-val-required="The Id field is required." id="Id" name="Id" value="0">
-                            <input type="hidden" data-val="true" data-val-required="The FirmaId field is required." id="FirmaId"  value="">
+                            <input type="hidden" data-val="true" data-val-required="The FirmaId field is required." asp-for="Sepet.CariId" id="Siparis" value="@ViewBag.Id">
+                            <input type="hidden" data-val="true" data-val-required="The FirmaId field is required." asp-for="Sepet.SiparisId" id="Siparis" value="1">
                             <input type="hidden" data-val="true" data-val-required="The OlusturmaTarihi field is required." id="OlusturmaTarihi" name="OlusturmaTarihi" value="12.07.2024 11:47:22">
                             <input type="hidden" id="GuncellemeTarihi" name="GuncellemeTarihi" value="">
                             <div class="row mb-3">
@@ -77,12 +90,12 @@
                                     <div class="input-group mb-3">
                                         <label for="urunId" class="input-group-text">Ürün</label>
                                         <select id="urunId" style="width:76%;" data-val="true" data-val-required="The urunId field is required." asp-for="Sepet.UrunId" data-select2-id="urunId" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
-                                            @foreach(var item in Model.UrunListe ?? new())
+                                            @foreach (var item in Model.UrunListe ?? new())
                                             {
                                                 <option value="@item.Id" data-adet="@item.Stok" accesskey="">@item.Urunadi</option>
                                             }
-                                           
-                                        </select><span class="select2 select2-container select2-container--bootstrap4" dir="ltr" data-select2-id="5" style="width: 76%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-urunId-container"><span class="select2-selection__rendered" id="select2-urunId-container" role="textbox" aria-readonly="true" title="26 PROTEİN KÜSPE (189)">26 PROTEİN KÜSPE (189)</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+
+                                        </select><span class="select2 select2-container select2-container--bootstrap4" dir="ltr" data-select2-id="5" style="width: 76%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-urunId-container"><span class="select2-selection__rendered" id="select2-urunId-container" role="textbox" aria-readonly="true" </span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
                                         <span class="field-validation-valid" data-valmsg-for="urunId" data-valmsg-replace="true"></span>
                                     </div>
                                 </div>
@@ -106,7 +119,8 @@
                                     <button class="btn btn-primary active mb-3" type="submit">Ürünü Ekle</button>
                                 </div>
                             </div>
-                        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8Cbel7F_8F9EmmwgGAcIw2485fR7DF9DBPQ1ovqBXWyNGBPyp3JIns_Go9Ch7UvLNGCYCK17ozeZYqgIX1hedibGiVcpzlkUjKKP_cqElvNz0SngwCxf7yahnQl80OImpN8t5HGKxf_WmkEpWSOtOnSwVU3XvmYW9bSvJMsik-6j_PX4Y3UlwWNxpeFtYwcLzw"></form>
+                            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8Cbel7F_8F9EmmwgGAcIw2485fR7DF9DBPQ1ovqBXWyNGBPyp3JIns_Go9Ch7UvLNGCYCK17ozeZYqgIX1hedibGiVcpzlkUjKKP_cqElvNz0SngwCxf7yahnQl80OImpN8t5HGKxf_WmkEpWSOtOnSwVU3XvmYW9bSvJMsik-6j_PX4Y3UlwWNxpeFtYwcLzw">
+                        </form>
                     </div>
 
                     <div class="col-12 col-md-6 col-xxl-7">
@@ -123,29 +137,30 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach(var item in Model.SepetListe ?? new())
+                                        @foreach (var item in Model.SepetListe ?? new())
                                         {
-                                         @*    var urunad = Model.UrunListe.FirstOrDefault(m => m.Id == item.UrunId) ?? new(); *@
                                             <tr>
                                                 <td>@item.UrunId</td>
                                                 <td>@item.Adet</td>
                                                 <td>@item.SatisTutar</td>
-                                                <td>@item.ToplamTutar<td>
-
+                                                <td>@item.ToplamTutar
+                                                <td>
                                             </tr>
                                         }
-
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
-
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function CariyiYonlendir(e) {
+        var deger = $(e).val();
+        window.location = "/Satis/SatisForm/" + deger;
+    }
+</script>

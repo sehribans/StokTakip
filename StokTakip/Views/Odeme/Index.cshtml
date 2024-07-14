@@ -1,30 +1,30 @@
-﻿@model TblKategori
+﻿@model TblOdemetipi
 @{
-    ViewData["Title"] = "Kategori";
-    List<TblKategori> katagoriler = ViewBag.Kategori;
+    List<TblOdemetipi> odeme = ViewBag.OdemeList;
 }
-<div class="col-md-4">
+<div class="col-6">
     <div class="card mb-4">
-        <h5 class="card-header">Kategori Formu</h5>
+        <h5 class="card-header">Ödeme Tipi Formu</h5>
         <div class="card-body">
-            <form asp-action="KategoriForm" method="post">
+            <form asp-action="OdemeForm" method="post">
                 <div class="mb-3 d-flex">
-                    <div class="col-lg-8 me-2">
-                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Kategori Adı" aria-describedby="defaultFormControlHelp" asp-for="Kategori" />
+                    <div class="col-lg-5 me-1">
+                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Ödeme Adı" aria-describedby="defaultFormControlHelp" asp-for="OdemeAdi" />
                     </div>
-                    <button type="submit" class="btn text-white mb-2 col-lg-4 btn-primary">Ekle</button>
+                    <div class="col-lg-5 me-1">
+                    <input type="number" class="form-control" id="defaultFormControlInput" placeholder="Komisyon" aria-describedby="defaultFormControlHelp" asp-for="Komisyon" />
+                    </div>
+                    <button type="submit" class="btn text-white mb-2 col-lg-2 btn-primary">Ekle</button>
                 </div>
 
             </form>
         </div>
     </div>
 </div>
-
-
-<div class="card col-md-4">
+<div class="card col-6">
     <div class="d-flex justify-content-between">
         <h5 class="card-header">Kategoriler</h5>
-      
+
     </div>
 
 
@@ -32,17 +32,19 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>KATEGORİ</th>
+                    <th>ÖDEME</th>
+                    <th>KOMİSYON</th>
 
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
 
-                @foreach (var item in katagoriler)
+                @foreach (var item in odeme)
                 {
                     <tr>
-                        <td>@item.Kategori</td>
-                       
+                       <td>@item.OdemeAdi</td>
+                       <td>@item.Komisyon</td>
+
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -50,7 +52,7 @@
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="/Urun/KategoriForm/@item.Id"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                    <a class="dropdown-item" href="/Urun/KSil/@item.Id"><i class="bx bx-trash me-1"></i> Delete</a>
+                                    <a class="dropdown-item" href="/Odeme/Sil/@item.Id"><i class="bx bx-trash me-1"></i> Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -64,4 +66,3 @@
         </table>
     </div>
 </div>
-
