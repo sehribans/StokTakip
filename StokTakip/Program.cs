@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StokTakip.Models;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +10,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 var connetionsString = builder.Configuration.GetConnectionString("db");
 builder.Services.AddDbContext<StokTakipContext>(opt => opt.UseSqlServer(connetionsString));
+
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(opts =>
+                {
+                    opts.LoginPath = "/Login/Index";
+                    opts.LogoutPath = "/Login/Logout";
+                    opts.Cookie.Name = "Auth";
+                    opts.SlidingExpiration = false;
+                    opts.ExpireTimeSpan = TimeSpan.FromDays(2);
+                    opts.AccessDeniedPath = "/Login/AccessDenied";
+                });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -19,6 +19,7 @@ namespace StokTakip.Models
         public virtual DbSet<TblAltmenu> TblAltmenus { get; set; } = null!;
         public virtual DbSet<TblCari> TblCaris { get; set; } = null!;
         public virtual DbSet<TblKategori> TblKategoris { get; set; } = null!;
+        public virtual DbSet<TblKullanici> TblKullanicis { get; set; } = null!;
         public virtual DbSet<TblMenu> TblMenus { get; set; } = null!;
         public virtual DbSet<TblOdemetipi> TblOdemetipis { get; set; } = null!;
         public virtual DbSet<TblSepet> TblSepets { get; set; } = null!;
@@ -95,6 +96,23 @@ namespace StokTakip.Models
                     .HasColumnName("KATEGORI");
             });
 
+            modelBuilder.Entity<TblKullanici>(entity =>
+            {
+                entity.ToTable("TBL_KULLANICI");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Ad).HasColumnName("AD");
+
+                entity.Property(e => e.Eposta).HasColumnName("EPOSTA");
+
+                entity.Property(e => e.Parola).HasColumnName("PAROLA");
+
+                entity.Property(e => e.Soyad).HasColumnName("SOYAD");
+
+                entity.Property(e => e.Telefon).HasColumnName("TELEFON");
+            });
+
             modelBuilder.Entity<TblMenu>(entity =>
             {
                 entity.ToTable("TBL_MENU");
@@ -131,14 +149,18 @@ namespace StokTakip.Models
 
                 entity.Property(e => e.Adet).HasColumnName("ADET");
 
+                entity.Property(e => e.CariId).HasColumnName("CARI_ID");
+
                 entity.Property(e => e.SatisTutar)
                     .HasColumnType("decimal(18, 2)")
                     .HasColumnName("SATIS_TUTAR");
-                entity.Property(e => e.ToplamTutar)
-                   .HasColumnType("decimal(18, 2)")
-                   .HasColumnName("TOPLAM_TUTAR");
+
                 entity.Property(e => e.SiparisId).HasColumnName("SIPARIS_ID");
-                entity.Property(e => e.CariId).HasColumnName("CARI_ID");
+
+                entity.Property(e => e.ToplamTutar)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("TOPLAM_TUTAR");
+
                 entity.Property(e => e.UrunId).HasColumnName("URUN_ID");
             });
 
