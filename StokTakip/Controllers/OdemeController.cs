@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StokTakip.Models;
 
 namespace StokTakip.Controllers
 {
+
     public class OdemeController : Controller
     {
         private readonly StokTakipContext _context;

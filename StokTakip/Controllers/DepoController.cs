@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StokTakip.Models;
 using StokTakip.Models.Vm;
 
 namespace StokTakip.Controllers
 {
+
     public class DepoController : Controller
     {
         private readonly StokTakipContext _context;

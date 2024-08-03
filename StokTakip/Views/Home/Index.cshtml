@@ -5,9 +5,10 @@
     ViewData["Title"] = "Home Page";
     var gelir = ViewBag.Gelir;
     var urunler = ViewBag.urun;
+    List<TblKategori> kategori = ViewBag.kategori;
 }
 <div class="row">
-    <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
+    @* <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
         <div class="card h-100">
             <div class="card-header d-flex align-items-center justify-content-between pb-0">
                 <div class="card-title mb-0">
@@ -24,6 +25,10 @@
                         <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                        @foreach(var item in Model.UrunListe)
+                        {
+                            var kategogori = kategori.FirstOrDefault(m => m.Id == item.Kategoriid);
+                        }
                         <a class="dropdown-item" href="javascript:void(0);">Select All</a>
                         <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
                         <a class="dropdown-item" href="javascript:void(0);">Share</a>
@@ -102,7 +107,7 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div> *@
     <div class="col-lg-3 col-md-12 col-6 mb-4">
         <div class="card">
             <div class="card-body">
