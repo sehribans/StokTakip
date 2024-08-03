@@ -1,0 +1,51 @@
+﻿@using StokTakip.Models.Vm
+@model DepoVm
+
+@{
+
+}
+<div class="card">
+    <div class="d-flex justify-content-between">
+        <h5 class="card-header">Sevkiyat Detayı</h5>
+
+    </div>
+
+
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+
+
+                    <th>ÜRÜN ADI</th>
+                    <th>GİRİŞ ADET</th>
+                    <th>KALAN ADET</th>
+                    <th>ALIŞ FİYATI</th>
+                    <th>TOPLAM TUTAR</th>
+                    <th>#</th>
+
+
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+
+                @foreach (var item in Model.SevkiyatList)
+                {
+                    var urunad = Model.UrunListe.FirstOrDefault(m => m.Id == item.UrunId) ?? new();
+                    var urunsayi = Model.UrunListe.Where(x => x.Id == item.UrunId).Count();
+                    <tr>
+                        <td>@urunad.Urunadi</td>
+                        <td>@item.Adet</td>
+                        <td>@(urunsayi+item.Adet)</td>
+                        <td>@item.AlisFiyat</td>
+                        <td>@string.Format("{0:C2}", item.Adet * item.AlisFiyat)</td>
+                    </tr>
+                }
+
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>

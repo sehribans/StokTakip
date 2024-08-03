@@ -20,8 +20,6 @@ namespace StokTakip.Controllers
          ViewBag.siparis=  _context.TblSiparis.ToList();
            ViewBag.Cari= _context.TblCaris.ToList();
             ViewBag.Odeme= _context.TblOdemetipis.ToList();
-
-           
             return View(_context.TblSepets.ToList());
         }
          [HttpGet]
@@ -32,6 +30,8 @@ namespace StokTakip.Controllers
              satisVm.UrunListe= _context.TblUruns.ToList();
              satisVm.CariListe= _context.TblCaris.ToList();
             satisVm.SepetListe= _context.TblSepets.Where(m=> m.CariId==id).ToList();
+            satisVm.SepetListe = _context.TblSepets.Where(s => s.SiparisId == 0 || s.SiparisId == null).ToList();
+            ViewBag.ToplamTurtar = satisVm.SepetListe.Sum(m => m.SatisTutar * m.Adet);
             ViewBag.Id = id;
             return View(satisVm);
 
@@ -40,24 +40,36 @@ namespace StokTakip.Controllers
         [HttpPost]
         public IActionResult SatisPost(SatisVm model)
         {
-            if (ModelState.IsValid)
-            {
-
+           
                model.Siparis.KayitTarihi= DateTime.Now;
                _context.TblSiparis.Add(model.Siparis);
                 _context.SaveChanges();
                 var sonsiparis = _context.TblSiparis.OrderBy(m => m.Id).LastOrDefault() ?? new();
-                var sonsepet = _context.TblSepets.OrderBy(m => m.Id).LastOrDefault() ?? new();
-                sonsepet.CariId = sonsiparis.CariId;
-                sonsepet.SiparisId = sonsiparis.Id;
-               
-                _context.TblSepets.Update(sonsepet);
-
+               var sonsepet = _context.TblSepets.Where(m => m.SiparisId== 0 || m.SiparisId == null).ToList();
+           
+               var urun= _context.TblUruns.Where(x => sonsepet.Select(m=> m.UrunId).Contains(x.Id)).ToList();
+            foreach(var u in urun) {
+                var cikisadet = sonsepet.FirstOrDefault(m => m.UrunId == u.Id);
+                u.Stok = (short?)((u.Stok ?? 0) - (cikisadet.Adet ?? 0));
+                _context.TblUruns.Update(u);
                 _context.SaveChanges();
-
-                return RedirectToAction("Index");
             }
-            return View(model);
+            
+            foreach (var s in sonsepet) { 
+                s.SiparisId = sonsiparis.Id;
+                _context.TblSepets.Update(s);
+                _context.SaveChanges();
+            }
+            var sonurun = _context.TblSepets.OrderBy(m => m.Id).LastOrDefault() ?? new();
+            var caribakiye = _context.TblCaris.FirstOrDefault(x => x.Id==sonurun.CariId);
+            caribakiye.Bakiye = sonsepet.Sum(x => x.SatisTutar * x.Adet);
+            caribakiye.Bakiye= sonsiparis.AlinanTutar-caribakiye.Bakiye;
+            _context.TblCaris.Update(caribakiye);
+
+            _context.SaveChanges();
+                return RedirectToAction("Index");
+           
+    
         }
 
         [HttpPost]
@@ -100,67 +112,7 @@ namespace StokTakip.Controllers
     }
    
 
-    // [HttpPost]
-    // public IActionResult SatisPost(SatisVm  model)
-    // {
 
-
-    //     var Siparis = new TblSipari
-    //     {
-    //         CariId = model.Siparis.CariId,
-    //         AlinanTutar = model.Siparis.AlinanTutar,
-    //         KayitTarihi = DateTime.Now,
-    //         Aciklama = model.Siparis.Aciklama,
-    //         OdemeSeklİ = model.Siparis.OdemeSeklİ,
-
-    //     };
-    //     _context.TblSiparis.Add(Siparis);
-    //     _context.SaveChanges();
-    //     model.CariListe = _context.TblCaris.ToList();
-    //     model.OdemetipiListe = _context.TblOdemetipis.ToList();
-    //     var son = _context.TblSiparis.OrderBy(m => m.Id).LastOrDefault();
-    //     var siparisID = _context.TblSepets.Where(m => m.SiparisId == 0);
-
-    //     foreach (var item in siparisID)
-    //     {
-    //         item.SiparisId = son.Id;
-    //         _context.TblSepets.Update(item);
-    //     }
-
-    //     return RedirectToAction("Index");
-    // }
-
-
-    // [HttpPost]
-    // public IActionResult AddOrUpdate(SatisVm model)
-    // {
-
-    //     var sepet = model.SepetListe ?? new List<TblSepet>();
-    //     sepet.Add(new TblSepet
-    //     {
-    //         SiparisId = 0,
-    //         UrunId = model.Sepet.UrunId,
-    //         Adet = model.Sepet.Adet,
-    //         SatisTutar = model.Sepet.SatisTutar,
-    //         ToplamTutar = model.Sepet.Adet * model.Sepet.SatisTutar
-    //     }); ;
-
-    //     model.SepetListe = sepet;
-
-
-
-    //     model.CariListe = _context.TblCaris.ToList();
-    //     model.OdemetipiListe = _context.TblOdemetipis.ToList();
-
-    //     _context.SaveChanges();
-    //     return View("SatisForm", model);
-    // }
-    //public IActionResult GetSepetListe(int Id) {
-
-    //     var sepetListe = _context.TblSepets.Where(s => s.CariId == Id).ToList();
-
-    //     return Json(sepetListe);
-    // }
 }
    
 

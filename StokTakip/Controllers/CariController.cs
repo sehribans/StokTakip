@@ -45,5 +45,11 @@ namespace StokTakip.Controllers
 
             return View();
         }
+        public IActionResult Sil(int id)
+        {
+            _context.TblCaris.Remove(_context.TblCaris.Find(id));
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

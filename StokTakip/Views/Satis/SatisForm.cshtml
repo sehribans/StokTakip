@@ -2,6 +2,9 @@
 @model SatisVm
 @{
     List<TblSepet> sepet = ViewBag.sepet;
+
+    var toplam = ViewBag.ToplamTurtar;
+    var id = ViewBag.Id;
 }
 <div class="row">
     <div class="col-md-12">
@@ -65,8 +68,8 @@
                                         <input type="text" class="form-control" data-val="true" data-val-length="The field Aciklama must be a string with a maximum length of 8192." data-val-length-max="8192" id="Aciklama" maxlength="8192" asp-for="Siparis.Aciklama" value="">
                                     </div>
                                 </div>
-                                <div class="col-lg-8" style="text-align:end;">
-                                    <h4 class="mt-3">Toplam Tutar : <span style="color:green;">0₺</span></h4>
+                                <div class="col-lg-12" style="text-align:end;">
+                                    <h4 class="mt-3">Toplam Tutar : <span style="color:green;">@toplam ₺</span></h4>
                                 </div>
                             </div>
                             <input name="__RequestVerificationToken" type="hidden" value="CfDJ8Cbel7F_8F9EmmwgGAcIw2485fR7DF9DBPQ1ovqBXWyNGBPyp3JIns_Go9Ch7UvLNGCYCK17ozeZYqgIX1hedibGiVcpzlkUjKKP_cqElvNz0SngwCxf7yahnQl80OImpN8t5HGKxf_WmkEpWSOtOnSwVU3XvmYW9bSvJMsik-6j_PX4Y3UlwWNxpeFtYwcLzw">
@@ -81,8 +84,8 @@
                     <div class="col-12 col-md-6 col-xxl-5">
                         <form method="post" enctype="multipart/form-data" action="/Satis/AddOrUpdate">
                             <input type="hidden" data-val="true" data-val-required="The Id field is required." id="Id" name="Id" value="0">
-                            <input type="hidden" data-val="true" data-val-required="The FirmaId field is required." asp-for="Sepet.CariId" id="Siparis" value="@ViewBag.Id">
-                            <input type="hidden" data-val="true" data-val-required="The FirmaId field is required." asp-for="Sepet.SiparisId" id="Siparis" value="1">
+                            <input type="hidden" data-val="true" data-val-required="The FirmaId field is required." asp-for="Sepet.CariId" id="Siparis" value="@id">
+                            <input type="hidden" data-val="true" data-val-required="The FirmaId field is required." asp-for="Sepet.SiparisId" id="Siparis" >
                             <input type="hidden" data-val="true" data-val-required="The OlusturmaTarihi field is required." id="OlusturmaTarihi" name="OlusturmaTarihi" value="12.07.2024 11:47:22">
                             <input type="hidden" id="GuncellemeTarihi" name="GuncellemeTarihi" value="">
                             <div class="row mb-3">
@@ -143,8 +146,8 @@
                                                 <td>@item.UrunId</td>
                                                 <td>@item.Adet</td>
                                                 <td>@item.SatisTutar</td>
-                                                <td>@item.ToplamTutar
-                                                <td>
+                                                <td>@(item.SatisTutar*item.Adet)</td>
+                                               
                                             </tr>
                                         }
                                     </tbody>

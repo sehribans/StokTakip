@@ -1,0 +1,47 @@
+﻿@using StokTakip.Models.Vm;
+@model UrunHaraketVm
+
+
+<div class="card">
+    <div class="d-flex justify-content-between">
+        <h5 class="card-header">Ürün Giriş Bilgileri</h5>
+    </div>
+
+
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>TARİH</th>
+                    <th>SEVKİYAT ADI</th>
+                    <th>GİRİŞ ADETİ</th>
+                    <th>KALAN ADET</th>
+                    <th>ALIŞ FİYATI</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+
+                @foreach (var item in Model.SevkiyatList)
+                {
+                    var depo = Model.DepoList.FirstOrDefault(x => x.Id == item.DepoId) ?? new();
+                    
+
+                    <tr>
+
+                        <td>@depo.Tarih</td>
+                        <td>@depo.SevkiyatAd</td>
+                        <td>@item.Adet</td>
+                        <td>@item.AlisFiyat</td>
+
+
+                    </tr>
+                }
+
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+

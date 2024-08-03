@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
 using StokTakip.Models;
+using StokTakip.Models.Vm;
 
 namespace StokTakip.Controllers
 {
@@ -101,7 +102,25 @@ namespace StokTakip.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        public IActionResult SatisIncele(int id) { 
+            var Vm = new UrunHaraketVm();
+            Vm.SepetListe = _context.TblSepets.Where(m=>m.UrunId == id).ToList();
+            Vm.SiparisListe=_context.TblSiparis.Where(x => Vm.SepetListe.Select(x => x.SiparisId).Contains(x.Id)).ToList();
+            Vm.SevkiyatList = _context.TblSevkiyats.Where(x => x.UrunId == id).ToList();
+            Vm.DepoList= _context.TblDepos.Where(x => Vm.SevkiyatList.Select(x=> x.Id).Contains(x.Id)).ToList();
+            Vm.CariList = _context.TblCaris.Where(x => Vm.SepetListe.Select(x=> x.CariId).Contains(x.Id)).ToList(); 
+            return View(Vm); 
+        }
+        public IActionResult GirisIncele(int id)
+        {
+            var Vm = new UrunHaraketVm();
+            Vm.SepetListe = _context.TblSepets.Where(m => m.UrunId == id).ToList();
+            Vm.SiparisListe = _context.TblSiparis.Where(x => Vm.SepetListe.Select(x => x.SiparisId).Contains(x.Id)).ToList();
+            Vm.SevkiyatList = _context.TblSevkiyats.Where(x => x.UrunId == id).ToList();
+            Vm.DepoList = _context.TblDepos.Where(x => Vm.SevkiyatList.Select(x => x.DepoId).Contains(x.Id)).ToList();
+            Vm.CariList = _context.TblCaris.Where(x => Vm.SepetListe.Select(x => x.CariId).Contains(x.Id)).ToList();
+            return View(Vm);
+        }
     }
 
 }

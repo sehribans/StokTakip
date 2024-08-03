@@ -1,0 +1,52 @@
+﻿@using StokTakip.Models.Vm;
+@model List<TblDepo>
+
+@{
+    List<TblSevkiyat> sevkiyat = ViewBag.Sevkiyat;
+   
+}
+<div class="card">
+    <div class="d-flex justify-content-between">
+        <h5 class="card-header">Sevkiyat Listesi</h5>
+
+    </div>
+
+
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+
+                    <th>Tarih</th>
+                    <th>Sevkiyat Adı</th>
+                    <th>#</th>
+
+
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @foreach (var item in Model)
+                {
+                   
+                    <tr>
+                        <td>@item.Tarih</td>
+                        <td>@item.SevkiyatAd</td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/Depo/Detay/@item.Id"><i class='bx bx-info-circle me-1' style="color:#8d8fff"></i>Detayları Görüntüle</a>
+                                    <a class="dropdown-item" href="/Depo/Sil/@item.Id"><i class="bx bx-trash me-1" style="color:#8d8fff"></i> Sil</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@using StokTakip.Models.Vm;
+@model UrunHaraketVm
+
+
+<div class="card">
+    <div class="d-flex justify-content-between">
+        <h5 class="card-header">Ürün Çıkış Bilgileri</h5>
+    </div>
+
+
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>TARİH</th>
+                    <th>CARİ ADI</th>
+                    <th>ADET</th>
+                    <th>SATIŞ FİYAT</th>
+                   
+
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+
+                @foreach (var item in Model.SepetListe)
+                {
+                    var siparis = Model.SiparisListe.FirstOrDefault(x => x.Id == item.SiparisId) ?? new();
+                    var cari = Model.CariList.FirstOrDefault(x => x.Id == item.CariId);
+                   
+                    <tr>
+
+                        <td>@siparis.KayitTarihi</td>
+                        <td>@cari.Unvan</td>
+                        <td>@item.Adet</td>
+                        <td>@item.SatisTutar</td>
+                        
+                    </tr>
+                }
+
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>

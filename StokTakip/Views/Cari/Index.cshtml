@@ -32,7 +32,9 @@
                         <td>@item.Telefon</td>
                         <td>@item.Eposta</td>
                         <td>@item.Adres</td>
-                        <td>  <a class="dropdown-item" href="/Cari/CariDetay/@item.Id"><span class="badge bg-label-primary me-1">@item.Bakiye</span></a></td>
+                        <td>
+                            <span class="badge @(item.Bakiye>0 ? "text-success" : "text-danger")  me-1">@(item.Bakiye > 0 ? "+" : "-")@item.Bakiye </span>
+                        </td>
                         <td>@item.OlusturmaTarihi</td>
                         <td>
                             <div class="dropdown">

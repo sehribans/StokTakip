@@ -18,11 +18,13 @@ namespace StokTakip.Models
 
         public virtual DbSet<TblAltmenu> TblAltmenus { get; set; } = null!;
         public virtual DbSet<TblCari> TblCaris { get; set; } = null!;
+        public virtual DbSet<TblDepo> TblDepos { get; set; } = null!;
         public virtual DbSet<TblKategori> TblKategoris { get; set; } = null!;
         public virtual DbSet<TblKullanici> TblKullanicis { get; set; } = null!;
         public virtual DbSet<TblMenu> TblMenus { get; set; } = null!;
         public virtual DbSet<TblOdemetipi> TblOdemetipis { get; set; } = null!;
         public virtual DbSet<TblSepet> TblSepets { get; set; } = null!;
+        public virtual DbSet<TblSevkiyat> TblSevkiyats { get; set; } = null!;
         public virtual DbSet<TblSipari> TblSiparis { get; set; } = null!;
         public virtual DbSet<TblUrun> TblUruns { get; set; } = null!;
 
@@ -83,6 +85,24 @@ namespace StokTakip.Models
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("UNVAN");
+            });
+
+            modelBuilder.Entity<TblDepo>(entity =>
+            {
+                entity.ToTable("TBL_DEPO");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Aciklama)
+                    .HasMaxLength(400)
+                    .HasColumnName("ACIKLAMA");
+
+                entity.Property(e => e.SevkiyatAd)
+                    .HasMaxLength(100)
+                    .HasColumnName("SEVKIYAT_AD");
+                entity.Property(e => e.Tarih)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TARIH");
             });
 
             modelBuilder.Entity<TblKategori>(entity =>
@@ -160,6 +180,23 @@ namespace StokTakip.Models
                 entity.Property(e => e.ToplamTutar)
                     .HasColumnType("decimal(18, 2)")
                     .HasColumnName("TOPLAM_TUTAR");
+
+                entity.Property(e => e.UrunId).HasColumnName("URUN_ID");
+            });
+
+            modelBuilder.Entity<TblSevkiyat>(entity =>
+            {
+                entity.ToTable("TBL_SEVKIYAT");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Adet).HasColumnName("ADET");
+
+                entity.Property(e => e.AlisFiyat)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("ALIS_FIYAT");
+
+                entity.Property(e => e.DepoId).HasColumnName("DEPO_ID");
 
                 entity.Property(e => e.UrunId).HasColumnName("URUN_ID");
             });

@@ -24,6 +24,7 @@
                     <th>Ödeme Türü</th>
                     <th>Alınan Tutar</th>
                     <th>Kasa Yazarı</th>
+                    <th>Kâr/Zarar</th>
                     <th>#</th>
 
 
@@ -39,9 +40,10 @@
                     <tr>
                         <td>@string.Format("{0:D}", @siparisler.KayitTarihi)</td>
                         <td>@unvan.Unvan</td>
-                        <td>@string.Format("{0:C2}",@item.SatisTutar)</td>
+                        <td>@string.Format("{0:C2}",(item.SatisTutar*item.Adet))</td>
                         <td>@tip.OdemeAdi</td>
                         <td>@string.Format("{0:C2}",@siparisler.AlinanTutar)</td>
+                        <td>@(item.SatisTutar-(item.SatisTutar * tip.Komisyon / 100))</td>
                         <td>@(item.SatisTutar-(item.SatisTutar * tip.Komisyon / 100))</td>
                         
                         <td>
@@ -50,8 +52,8 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/Satis/Detay/@siparisler.Id"><i class='bx bx-info-circle me-1'></i>Detayları Görüntüle</a>
-                                    <a class="dropdown-item" href="/Satis/Sil/@siparisler.Id"><i class="bx bx-trash me-1"></i> Sil</a>
+                                    <a class="dropdown-item" href="/Satis/Detay/@siparisler.Id"><i class='bx bx-info-circle me-1' style="color:#8d8fff"></i>Detayları Görüntüle</a>
+                                    <a class="dropdown-item" href="/Satis/Sil/@siparisler.Id"><i class="bx bx-trash me-1" style="color:#8d8fff"></i> Sil</a>
                                 </div>
                             </div>
                         </td>
