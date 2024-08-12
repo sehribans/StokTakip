@@ -1,0 +1,47 @@
+﻿
+
+<div class="row">
+<div class="col-6">
+    <div class="card mb-4">
+
+        <div class="card-body">
+            <form id="ogrenciForm" method="post" asp-action="OgrenciForm" onsubmit="return false">
+                <input type="hidden" id="ogridInput" asp-for="Ogrenci.Id" />
+                <div class="mb-3 d-flex">
+                    <div class="col-lg-5 me-1">
+                        <input type="text" class="form-control" id="adsoyadInput" placeholder="Ad Soyad" aria-describedby="defaultFormControlHelp" asp-for="Ogrenci.AdSoyad" />
+                        <input type="text" class="form-control" id="ogrnumaraInput" placeholder="Öğrenci Numarası" aria-describedby="defaultFormControlHelp" asp-for="Ogrenci.OgrNumara" />
+                        <input type="text" class="form-control" id="numaraInput" placeholder="Numara" aria-describedby="defaultFormControlHelp" asp-for="Ogrenci.Numara" />
+                    </div>
+
+                    <button onclick="FormGonder()" type="submit" class="btn text-white mb-2 col-lg-2 btn-primary">Ekle</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<div class="card col-6">
+    <div class="d-flex justify-content-between">
+        <h5 class="card-header">Öğrenci Listesi</h5>
+
+    </div>
+
+
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+
+                    <th>ID</th>
+                    <th>ÖĞRENCİ</th>
+                    <th>ÖĞR NUMARASI</th>
+                    <th>TEL NUMARASI</th>
+                    <th>İŞLEMLER</th>
+                </tr>
+            </thead>
+            <tbody id="OgrenciListesi" class="table-border-bottom-0">
+            </tbody>
+        </table>
+    </div>
+    </div></div>
